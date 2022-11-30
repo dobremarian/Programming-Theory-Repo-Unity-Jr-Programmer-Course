@@ -8,7 +8,14 @@ public class Player : MonoBehaviour
     private float moveSpeed = 300f;
     private Rigidbody playerRb;
     private Transform pointToFireFrom;
+    private bool canFire = false;
     [SerializeField] GameObject bullet;
+
+    public bool CanFire
+    {
+        get { return canFire; }
+        set { canFire = value; }
+    }
 
 
     void Start()
@@ -19,7 +26,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        FireBullet();
+        if(canFire) FireBullet();
     }
 
     void FixedUpdate()
@@ -47,7 +54,8 @@ public class Player : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0))
         {
-            Instantiate(bullet, pointToFireFrom.position, bullet.transform.rotation);
+           GameObject bulletInstance = Instantiate(bullet, pointToFireFrom.position, bullet.transform.rotation);
+           bulletInstance.GetComponent<Bullet>().BulletDirection = Vector3.forward;
         }
     }
 }

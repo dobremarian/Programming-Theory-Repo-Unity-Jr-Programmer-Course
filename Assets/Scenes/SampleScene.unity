@@ -668,6 +668,8 @@ MonoBehaviour:
   - {fileID: 7056495564065791292, guid: 2d046814ff4f4754fb0b095ec66d4874, type: 3}
   - {fileID: 4541786938956266507, guid: 394f07ba046972d4e9714abdb54db7c0, type: 3}
   - {fileID: 3043139543634386379, guid: f5397fc6f0c7dee44881b95fefbf6607, type: 3}
+  moveShipsTime: 1.1
+  activeEnemies: []
 --- !u!4 &2106861578
 Transform:
   m_ObjectHideFlags: 0
