@@ -5,39 +5,92 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField] List<GameObject> enemySpaceshipPrefabs;
-    [SerializeField] float moveShipsTime = 1.1f;
-    [SerializeField] List<GameObject> activeEnemies;
+    [SerializeField] float moveShipTime = 1.1f;
+    //[SerializeField] List<GameObject> activeEnemies;
+    private GameObject enemyShip;
     private Player thePlayer;
-    private int maxEnemies = 5;
-    private float moveShipsSpeed = 20f;
-    private Transform spawnOrigin;
-    private float xDistanceBetweenShips = 60f;
+    //private int maxEnemies = 5;
+    private float moveShipSpeed = 20f;
+    private float zPosSpawn = 110f;
+    private float xRangeSpawn = 120f;
+    //private Transform spawnOrigin;
+    //private float xDistanceBetweenShips = 60f;
     private float zToMove = 60f;
     private bool isInPosition = false;
 
+    public bool IsInPosition
+    {
+        get { return isInPosition; }
+        set { isInPosition = value; }
+    }
+
     void Start()
     {
-        spawnOrigin = GameObject.Find("Spawn Origin").GetComponent<Transform>();
+        //spawnOrigin = GameObject.Find("Spawn Origin").GetComponent<Transform>();
         thePlayer = GameObject.Find("Player").GetComponent<Player>();
-        SpawnWave();
+        //SpawnWave();
+        //SpawnShip();
     }
 
 
     void Update()
     {
-
-        if (!isInPosition)
+        if(enemyShip == null)
         {
-            StartCoroutine(MoveShipsInPositionCo());
+            SpawnShip();
+            thePlayer.CanFire = false;
         }
         else
         {
-            thePlayer.CanFire = true;
+            if (!isInPosition)
+            {
+                //StartCoroutine(MoveShipsInPositionCo());
+                StartCoroutine(MoveShipInPositionCo());
+            }
+            else
+            {
+                thePlayer.CanFire = true;
+                if(enemyShip != null)
+                {
+                    enemyShip.GetComponent<Enemy>().IsInPosition = true;
+                    //at the moment the error is because the other enemies dont have an enemy script on them
+                }
+            }
         }
+
 
     }
 
+    void SpawnShip()
+    {
+        int rand = Random.Range(0, enemySpaceshipPrefabs.Count);
+        float randX = Random.Range(-xRangeSpawn, xRangeSpawn);
+        Vector3 pos = new Vector3(randX, 0, zPosSpawn);
+        enemyShip = Instantiate(enemySpaceshipPrefabs[rand], pos, enemySpaceshipPrefabs[rand].transform.rotation);
 
+    }
+
+    IEnumerator MoveShipInPositionCo()
+    {
+        yield return new WaitForSeconds(moveShipTime);
+        float step = moveShipSpeed * Time.deltaTime;
+        if(enemyShip != null)
+        {
+            Vector3 targetPosition = new Vector3(enemyShip.transform.position.x, enemyShip.transform.position.y, zToMove);
+            enemyShip.transform.position = Vector3.MoveTowards(enemyShip.transform.position, targetPosition, step);
+            if (enemyShip.transform.position.z == zToMove)
+            {
+                isInPosition = true;
+            }
+            else
+            {
+                isInPosition = false;
+            }
+        }
+        
+    }
+
+    /*
     void SpawnWave()
     {
         for (int i = 0; i < maxEnemies; i++)
@@ -49,8 +102,9 @@ public class SpawnManager : MonoBehaviour
         }
 
         isInPosition = false;
-    }
+    }*/
 
+    /*
     IEnumerator MoveShipsInPositionCo()
     {
         yield return new WaitForSeconds(moveShipsTime);
@@ -71,4 +125,5 @@ public class SpawnManager : MonoBehaviour
         }
 
     }
+    */
 }

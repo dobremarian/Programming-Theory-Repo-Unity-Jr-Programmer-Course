@@ -7,7 +7,12 @@ public class Bullet : MonoBehaviour
     private Rigidbody bulletRb;
     private float bulletSpeed = 300f;
     private Vector3 bulletDirection;
+    private SpawnManager spawnManager;
 
+    private void Awake()
+    {
+        spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
+    }
 
     public float BulletSpeed
     {
@@ -36,6 +41,8 @@ public class Bullet : MonoBehaviour
         {
             Destroy(other.gameObject); //for the moment it will destroy the enemy but we'll make it take some damage before the enemy is destroyed
             Destroy(gameObject);
+            spawnManager.IsInPosition = false;
+
         }
         else if (other.gameObject.CompareTag("Player"))
         {

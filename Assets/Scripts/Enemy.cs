@@ -4,28 +4,39 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    private int nOBullets; //number of bullets that the enemy fires each wave
-    private float bRate; //the rate at wich each bullet is instantiated
-    private float bSpeed; //the speed of the bullet
-    private float wTime; //the time between waves of shooting
+    protected int nOBullets; //number of bullets that the enemy fires each wave
+    protected float bRate; //the rate at wich each bullet is instantiated
+    protected float bSpeed; //the speed of the bullet
+    protected float wTime; //the time between waves of shooting
+
+    private Transform firePoint;
+    private GameObject bullet;
+    private bool isInPosition;
     private bool isAlive;
+
     public bool IsAlive
     {
         get { return isAlive; }
         set { isAlive = value; }
     }
-    private GameObject bullet;
     public GameObject Bullet
     {
         get { return bullet; }
     }
-    void Start()
+    public bool IsInPosition
+    {
+        get { return isInPosition; }
+        set { isInPosition = value; }
+    }
+    protected virtual void Awake()
     {
         bullet = Resources.Load<GameObject>("Bullet");
+        firePoint = gameObject.transform.Find("Point To Fire From").GetComponent<Transform>();
+    
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         //at the moment we created a basic parent enemy scrips
         //we'll make a coroutine Shooting(number of bullets, bullet rate, bullet speed, time before fireing another bullet wave,
@@ -40,7 +51,7 @@ public class Enemy : MonoBehaviour
         //one can just move towards the player and try to crash into him
     }
 
-    protected virtual IEnumerator ShootingCo(int numberOfBullets, float bulletRate, float bulletSpeed, float waveTime)
+    protected virtual IEnumerator ShootingCo()
     {
         return null;
     }
