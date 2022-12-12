@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    protected int nOBullets; //number of bullets that the enemy fires each wave
-    protected float bRate; //the rate at wich each bullet is instantiated
-    protected float bSpeed; //the speed of the bullet
-    protected float wTime; //the time between waves of shooting
+    protected int numberOfBullets; //number of bullets that the enemy fires each wave
+    protected float bulletRate; //the rate at wich each bullet is instantiated
+    protected float bulletSpeed; //the speed of the bullet
+    protected float waveTime; //the time between waves of shooting
+    protected float fireTime; //the amount of time for bullets to be fired
 
     private Transform firePoint;
     private GameObject bullet;
@@ -27,6 +28,10 @@ public class Enemy : MonoBehaviour
     {
         get { return isInPosition; }
         set { isInPosition = value; }
+    }
+    public Transform FirePoint
+    {
+        get { return firePoint; }
     }
     protected virtual void Awake()
     {
@@ -51,7 +56,7 @@ public class Enemy : MonoBehaviour
         //one can just move towards the player and try to crash into him
     }
 
-    protected virtual IEnumerator ShootingCo()
+    protected virtual IEnumerator EnemyAttackCo()
     {
         return null;
     }

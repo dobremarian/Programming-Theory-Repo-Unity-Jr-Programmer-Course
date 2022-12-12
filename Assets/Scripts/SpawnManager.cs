@@ -67,6 +67,7 @@ public class SpawnManager : MonoBehaviour
         float randX = Random.Range(-xRangeSpawn, xRangeSpawn);
         Vector3 pos = new Vector3(randX, 0, zPosSpawn);
         enemyShip = Instantiate(enemySpaceshipPrefabs[rand], pos, enemySpaceshipPrefabs[rand].transform.rotation);
+        enemyShip.GetComponent<Enemy>().IsAlive = true;
 
     }
 
