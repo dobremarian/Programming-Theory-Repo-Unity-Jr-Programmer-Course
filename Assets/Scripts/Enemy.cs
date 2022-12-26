@@ -15,6 +15,9 @@ public class Enemy : MonoBehaviour
     private bool isInPosition;
     private bool isAlive;
 
+    protected bool isCoActive;
+
+
     public bool IsAlive
     {
         get { return isAlive; }

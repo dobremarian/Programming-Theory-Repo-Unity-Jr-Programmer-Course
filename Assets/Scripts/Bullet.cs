@@ -20,7 +20,7 @@ public class Bullet : MonoBehaviour
         set
         {
             if (value < 100f)
-            { bulletSpeed = 300f; }
+            { bulletSpeed = 100f; }
             else { bulletSpeed = value; }
         }
     }
@@ -46,7 +46,7 @@ public class Bullet : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Player"))
         {
-            //take damage
+            GameManager.instance.PlayerTakeDamage(1);
             Destroy(gameObject);
         }
     }

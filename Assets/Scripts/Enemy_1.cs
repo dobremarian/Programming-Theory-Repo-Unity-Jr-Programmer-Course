@@ -8,8 +8,6 @@ public class Enemy_1 : Enemy
     private float xPosRange = 120f;
     private float moveSpeed = 50f;
     private bool isRight = false;
-    public int fireShots;
-    private bool isCoActive = false;
 
     protected override void Awake()
     {
@@ -19,6 +17,7 @@ public class Enemy_1 : Enemy
         bulletSpeed = 300f;
         waveTime = 2f;
         fireTime = 1f;
+        isCoActive = false;
     }
 
     protected override void Update()
